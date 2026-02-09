@@ -25,7 +25,7 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.add_new_book('Что делать, если вы решили стать феей')
-        assert len(collector.books_genre) == 2
+        assert collector.books_genre == {'Гордость и предубеждение и зомби': '', 'Что делать, если вы решили стать феей': ''}
 
     def test_set_book_genre_name_in_dict_genre_in_list_genre_added(self):
         collector = BooksCollector()
@@ -59,7 +59,7 @@ class TestBooksCollector:
         for i in range(len(name_list)):
             collector.add_new_book(name_list[i])
             collector.set_book_genre(name_list[i], genre_list[i])
-        assert len(collector.get_books_with_specific_genre('Ужасы')) == 2
+        assert collector.get_books_with_specific_genre('Ужасы') == ['Гордость и предубеждение и зомби', 'Ужасы нашего городка']
 
     def test_get_books_with_specific_genre_genre_not_in_list_not_get_list(self):
         collector = BooksCollector()
@@ -70,13 +70,13 @@ class TestBooksCollector:
         for i in range(len(name_list)):
             collector.add_new_book(name_list[i])
             collector.set_book_genre(name_list[i], genre_list[i])
-        assert len(collector.get_books_with_specific_genre('Психотерапия')) == 0
+        assert collector.get_books_with_specific_genre('Психотерапия') == []
 
     def test_get_books_genre_type_dict(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.set_book_genre('Гордость и предубеждение и зомби', 'Ужасы')
-        assert type(collector.get_books_genre()) == dict
+        assert collector.books_genre['Гордость и предубеждение и зомби'] == 'Ужасы'
 
 
     def test_get_books_for_children_genre_in_age_rating_get_list(self):
@@ -88,25 +88,25 @@ class TestBooksCollector:
         for i in range(len(name_list)):
             collector.add_new_book(name_list[i])
             collector.set_book_genre(name_list[i], genre_list[i])
-        assert len(collector.get_books_for_children()) == 2
+        assert collector.get_books_for_children() == ['Мальчик-рыба-конь', 'Игорь-смельчак']
 
     def test_add_book_in_favorites_name_not_in_dict_not_added(self):
         collector = BooksCollector()
         collector.add_book_in_favorites('Гордость и предубеждение и зомби')
-        assert len(collector.favorites) == 0
+        assert collector.favorites == []
 
     def test_add_book_in_favorites_name_exists_in_favors_not_added(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.add_book_in_favorites('Гордость и предубеждение и зомби')
         collector.add_book_in_favorites('Гордость и предубеждение и зомби')
-        assert len(collector.favorites) == 1
+        assert collector.favorites == ['Гордость и предубеждение и зомби']
 
     def test_add_book_in_favorites_name_in_dict_and_not_in_favs_added(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.add_book_in_favorites('Гордость и предубеждение и зомби')
-        assert len(collector.favorites) == 1
+        assert collector.favorites == ['Гордость и предубеждение и зомби']
 
     def test_delete_book_from_favorites_name_not_in_favs_not_deleted(self):
         collector = BooksCollector()
@@ -114,7 +114,7 @@ class TestBooksCollector:
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.add_book_in_favorites('Гордость и предубеждение и зомби')
         collector.delete_book_from_favorites('Мальчик-рыба-конь')
-        assert len(collector.favorites) == 1
+        assert collector.favorites == ['Гордость и предубеждение и зомби']
 
     def test_delete_book_from_favorites_name_in_favs_deleted(self):
         collector = BooksCollector()
@@ -123,7 +123,7 @@ class TestBooksCollector:
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.add_book_in_favorites('Гордость и предубеждение и зомби')
         collector.delete_book_from_favorites('Мальчик-рыба-конь')
-        assert len(collector.favorites) == 1
+        assert collector.favorites == ['Гордость и предубеждение и зомби']
 
     def test_get_list_of_favorites_books_add_not_added_not_get(self):
         collector = BooksCollector()
@@ -132,10 +132,10 @@ class TestBooksCollector:
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.add_book_in_favorites('Гордость и предубеждение и зомби')
         collector.add_new_book('Игорь смельчак')
-        assert len(collector.get_list_of_favorites_books()) == 2
+        assert collector.get_list_of_favorites_books() == ['Мальчик-рыба-конь', 'Гордость и предубеждение и зомби']
 
     def test_get_list_of_favorites_books_get_list(self):
         collector = BooksCollector()
         collector.add_new_book('Мальчик-рыба-конь')
         collector.add_book_in_favorites('Мальчик-рыба-конь')
-        assert type(collector.get_list_of_favorites_books()) == list
+        assert collector.get_list_of_favorites_books() == ['Мальчик-рыба-конь']
