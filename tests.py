@@ -76,7 +76,7 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение и зомби')
         collector.set_book_genre('Гордость и предубеждение и зомби', 'Ужасы')
-        assert collector.books_genre['Гордость и предубеждение и зомби'] == 'Ужасы'
+        assert collector.get_book_genre('Гордость и предубеждение и зомби') == 'Ужасы'
 
 
     def test_get_books_for_children_genre_in_age_rating_get_list(self):
