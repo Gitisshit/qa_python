@@ -44,6 +44,13 @@ class TestBooksCollector:
         collector.set_book_genre('Гордость и предубеждение и зомби', 'Антиутопия')
         assert collector.books_genre['Гордость и предубеждение и зомби'] == ''
 
+    def test_set_book_genre_change_genre(self):
+        collector = BooksCollector()
+        collector.add_new_book('Гордость и предубеждение и зомби')
+        collector.set_book_genre('Гордость и предубеждение и зомби', 'Комедии')
+        collector.set_book_genre('Гордость и предубеждение и зомби', 'Ужасы')
+        assert collector.books_genre['Гордость и предубеждение и зомби'] == 'Ужасы'
+
     def test_get_book_genre_name_in_dict(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение и зомби')
@@ -72,12 +79,13 @@ class TestBooksCollector:
             collector.set_book_genre(name_list[i], genre_list[i])
         assert collector.get_books_with_specific_genre('Психотерапия') == []
 
-    def test_get_books_genre_type_dict(self):
+    def test_get_books_genre_get_dict(self):
         collector = BooksCollector()
         collector.add_new_book('Гордость и предубеждение и зомби')
+        collector.add_new_book('Мальчик-рыба-конь')
         collector.set_book_genre('Гордость и предубеждение и зомби', 'Ужасы')
-        assert collector.get_book_genre('Гордость и предубеждение и зомби') == 'Ужасы'
-
+        collector.set_book_genre('Мальчик-рыба-конь', 'Комедии')
+        assert collector.get_books_genre() == {'Гордость и предубеждение и зомби': 'Ужасы', 'Мальчик-рыба-конь': 'Комедии'}
 
     def test_get_books_for_children_genre_in_age_rating_get_list(self):
         collector = BooksCollector()
